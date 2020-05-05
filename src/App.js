@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Ubicaciones from './components/Ubicaciones';
+import useForm from './hooks/useForm';
+const App = () => {
+  const [info, setInfo] = useForm({
+    nombre: '',
+    telefono: '',
+    zona: '',
+  }); 
 
-function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form>
+        Nombre: <input type="text" name="nombre" onChange={setInfo}></input>
+        Telefono
+        <input type="number" name="telefono" onChange={setInfo} ></input>
+        Lugar donde su gato le pide caricias
+        <input type="text" name="zona" onChange={setInfo} ></input>
+      </form>
+      <hr />
+      <Ubicaciones />
     </div>
   );
-}
+};
 
 export default App;
