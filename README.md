@@ -1,68 +1,107 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Ejercicios optativos
 
-## Available Scripts
+### Ejecicio 1. 
+- Comenzar por un nuevo proyecto de React. Modificar App para que se vea asi:
 
-In the project directory, you can run:
+```js
+import React, { useState } from 'react';
+import './App.css';
+const App = () => {
 
-### `npm start`
+  const [count, setCount] = useState(1)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  const handleClick = () => {
+    setCount(count+1)
+  }
+  return (
+    <div className="App">
+      <button onClick={handleClick}>Contar</button>
+      <p>{count}</p>
+    </div>
+  );
+};
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+export default App;
+```
 
-### `npm test`
+- Queremos extraer toda la lógica del estado en App y llevarla a un custom hook. 
+- Hacer un custom hook que se llame desde App y que se encargue de actualizar la variable count cada vez que se aprieta el botón. 
+- App debería quedar así:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```js
+import React from 'react';
+import './App.css';
+import useCount from './hooks/useCount';
 
-### `npm run build`
+const App = () => {
+  const [count, setCount] = useCount(1);
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  return (
+    <div className="App">
+      <button onClick={setCount}>Contar</button>
+      <p>{count}</p>
+    </div>
+  );
+};
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+export default App;
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Ejercicio 2.
 
-### `npm run eject`
+- Modificar App para que se vea asi:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```js
+import React, { useState } from 'react';
+import './App.css';
+const App = () => {
+  const [count, setCount] = useState(1);
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  const handleClickSuma = () => {
+    setCount(count + 1);
+  };
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  const handleClickResta = () => {
+    setCount(count - 1);
+  };
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+  return (
+    <div className="App">
+      <button onClick={handleClickSuma}>Sumar</button>
+      <button onClick={handleClickResta}>Restar</button>
+      <p>{count}</p>
+    </div>
+  );
+};
 
-## Learn More
+export default App;
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Sin pensar en hooks todavía, modificar el código para que tanto la suma como la resta se hagan correctamente desde una sola función llamada handleClick 
+- (pista: va a ser necesario identificar a los botones, por ejemplo con un id o con un name)
+- Una vez que eso funcione, extraer toda la lógica del conteo al hook useCount
+- App debería quedar así:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```js
+import React from 'react';
+import './App.css';
+import useCount from './hooks/useCount'
+const App = () => {
 
-### Code Splitting
+  const [count, setCount] = useCount(1)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+  return (
+    <div className="App">
+      <button onClick={setCount} id="suma">Sumar</button>
+      <button onClick={setCount} id="resta">Restar</button>
+      <p>{count}</p>
+    </div>
+  );
+};
 
-### Analyzing the Bundle Size
+export default App;
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
